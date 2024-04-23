@@ -9,6 +9,8 @@ mongoConnect();
 
 const port = process.env.port || 5000;
 
+import auth from './routes/auth.js';
+app.use("/auth",auth);
 app.listen(port, ()=>
     console.log(`Server is running on port ${port}`)
 );
