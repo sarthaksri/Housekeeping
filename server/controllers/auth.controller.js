@@ -20,7 +20,6 @@ exports.login_post = asyncHandler(async (req, res) => {
                 user,
                 payload
         })
-        // passeord ?null
 
     } catch (error) {
         console.log(error);
