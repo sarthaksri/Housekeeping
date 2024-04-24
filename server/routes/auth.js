@@ -1,17 +1,11 @@
-import express from "express";
+const express = require("express");
 const router = express.Router();
+const signup = require("../controllers/auth.controller.js"); // Changed import to require
 
-var bodyParser=require('body-parser');
-app.use(bodyParser.json());
-// parse requests of content-type - application/x-www-form-urlencoded and - multipart/form-data
-app.use(bodyParser.urlencoded({ extended: true }));
+// Signup API : /auth/signup
+router.post("/signup", signup);
 
+// //Login API : /auth/login
+// router.post("/login", login);
 
-//Login API : /auth/login
-import user from "../controllers/auth.controller.js";
-router.post("/login",user.login_post);
-
-//Signup API : /auth/signup
-router.post("/signup",user.signup);
-
-module.exports = router;
+module.exports = router; // Changed export default to module.exports
