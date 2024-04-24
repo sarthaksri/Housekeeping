@@ -1,16 +1,16 @@
-import express from 'express';
+const express = require('express');
 const app = express();
-import dotenv from 'dotenv';
+const dotenv = require('dotenv');
 dotenv.config();
-import cors from 'cors';
+const cors = require('cors');
 app.use(cors());
-import mongoConnect from './config/db.js';
+const mongoConnect = require('./config/db.js');
 mongoConnect();
 
-const port = process.env.port || 5000;
+const port = process.env.PORT || 5000;
 
-import auth from './routes/auth.js';
-app.use("/auth",auth);
-app.listen(port, ()=>
-    console.log(`Server is running on port ${port}`)
-);
+const auth = require('./routes/auth.js');
+app.use("/auth", auth);
+app.listen(port, function() {
+    console.log("Server is running on port " + port);
+});
