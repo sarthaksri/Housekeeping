@@ -1,9 +1,9 @@
 const User = require('../schema/user.js');
 const asyncHandler = require('express-async-handler');
 
-const signup = asyncHandler(async (req, res) => {
+exports.signup = asyncHandler(async (req, res) => {
     try {
-        const { rollno, password } = req.body;
+        const { rollno, password, hostel, roomno } = req.body;
         if (!rollno || !password) {
             return res.status(403).json({
                 success: false,
@@ -21,7 +21,7 @@ const signup = asyncHandler(async (req, res) => {
 
         const user = await User.create({
             rollno: rollno,
-            password: password
+            password: password,
         });
 
         return res.status(200).json({
@@ -36,4 +36,32 @@ const signup = asyncHandler(async (req, res) => {
     }
 });
 
-module.exports = signup;
+exports.login = asyncHandler(async(req,res)=>{
+    try {
+        const { rollno, password } = req.body;
+        if (!rollno || !password) {
+            return res.status(403).json({
+                success: false,
+                message: "Fill all the details"
+            });
+        }
+
+        const user = await User.findOne({ rollno: rollno});
+        if (!user) {
+            return res.status(403).json({
+                success: false,
+                message: "Invalid Credentials"
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Login Successful",
+            user
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+});

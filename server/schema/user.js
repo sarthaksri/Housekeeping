@@ -9,6 +9,12 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true,
+  },
+  hostel:{
+    type : String
+  },
+  roomno:{
+    type : String
   }
 });
 
