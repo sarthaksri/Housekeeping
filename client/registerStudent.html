@@ -203,25 +203,25 @@
               <h3 class="mb-0">Register New Student</h3>
             </div>
             <div class="card-body pb-5">
-              <form method="POST" autocomplete="off" action="allothandler.php" id="registerForm">
+              <form  id="registerStudent" autocomplete="off">
                 <div class="pl-lg-4">
                   <div class="row">
                     <div class="col-md-3">
                       <div class="form-group">
                         <label class="form-control-label" for="input-id">Roll Number <span class="text-danger">*</span></label>
-                        <input type="number" name="regRoll" id="input-id" class="form-control" required placeholder="Enter numeric value">
+                        <input type="number" name="rollno" id="input-id" class="form-control" required placeholder="Enter numeric value">
                       </div>
                     </div>
                     <div class="col-md-3">
                       <div class="form-group">
                         <label class="form-control-label" for="input-room">Room Number <span class="text-danger">*</span></label>
-                        <input type="text" name="regRoom" id="input-room" class="form-control" required placeholder="Ex : C202">
+                        <input type="text" name="roomno" id="input-room" class="form-control" required placeholder="Ex : C202">
                       </div>
                     </div>
                     <div class="col-md-3">
                       <div class="form-group">
                         <label class="form-control-label" for="input-time">Floor <span class="text-danger">*</span></label>
-                        <input type="number" name="regFloor" id="input-time" class="form-control" required placeholder="Enter single digit no.">
+                        <input type="number" name="floor" id="input-time" class="form-control" required placeholder="Enter single digit no.">
                       </div>
                     </div>
                   </div>
@@ -238,14 +238,48 @@
   </div>
 
   <script>
-    // Script for handling form submission
-    document.getElementById("registerForm").addEventListener("submit", function(event) {
-      event.preventDefault();
-      // Here you can add your AJAX code to handle form submission
-      // For example, display a success message after form submission
-      document.getElementById("successText").innerText = "Student registered successfully!";
-      document.getElementById("successMessage").style.display = "block";
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get the form element
+      const form = document.getElementById('registerStudent');
+  
+      // Add event listener for form submission
+      form.addEventListener('submit', function(event) {
+        // Prevent the default form submission
+        event.preventDefault();
+  
+        // Serialize form data into JSON format
+        const formData = new FormData(form);
+        const jsonData = {};
+        formData.forEach((value, key) => {
+          jsonData[key] = value;
+        });
+  
+        // Send form data to the server
+        fetch('http://localhost:5000/manage/registerStudent', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(jsonData)
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Failed to register student');
+          }
+          return response.json();
+        })
+        .then(data => {
+          // Alert on success
+          alert('Student registered successfully!');
+        })
+        .catch(error => {
+          console.error('Registration error:', error);
+          // Handle registration errors
+          alert('Failed to register student. Please try again later.');
+        });
+      });
     });
   </script>
+  
 </body>
 </html>

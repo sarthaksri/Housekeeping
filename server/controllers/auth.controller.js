@@ -45,20 +45,22 @@ exports.login = asyncHandler(async(req,res)=>{
                 message: "Fill all the details"
             });
         }
-
         const user = await User.findOne({ rollno: rollno});
-        if (!user) {
+        console.log(req.body);
+        if (!user && user.password != password ) {
             return res.status(403).json({
                 success: false,
                 message: "Invalid Credentials"
             });
         }
-
-        return res.status(200).json({
+        else
+        {  
+            return res.status(200).json({
             success: true,
             message: "Login Successful",
             user
         });
+        }
 
     } catch (error) {
         console.log(error);

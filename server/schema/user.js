@@ -15,6 +15,9 @@ const UserSchema = new Schema({
   },
   roomno:{
     type : String
+  },
+  floor:{
+    type:String
   }
 });
 

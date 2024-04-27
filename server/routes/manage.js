@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const manage = require("../controllers/manage.controller.js"); // Changed import to require
 
-// Profile API : /manage/profile
-router.post("/profile", manage.profile);
+// Profile API : /manage/registerStudent
+router.post("/registerStudent", manage.registerStudent);
 // Room cleaning request API : /manage/request
 
 
