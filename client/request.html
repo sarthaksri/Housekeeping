@@ -206,7 +206,7 @@
               <h3 class="mb-0">Send Clean Request</h3>
             </div>
             <div class="card-body pb-5">
-              <form autocomplete="off" method="POST" action="studenthandler.php">
+              <form id="cleanRequest" autocomplete="off" >
                 <div class="pl-lg-4">
                   <div class="row">
                     <div class="col-lg-6">
@@ -235,6 +235,48 @@
         </div>
       </div>
     </div>
+
+    <script>
+      document.getElementById("cleanRequest").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent default form submission
+    
+        // Get form data
+        const formData = new FormData(this);
+    
+        // Convert form data to JSON
+        const jsonData = {};
+        formData.forEach((value, key) => {
+          jsonData[key] = value;
+        });
+    
+        // Send AJAX request
+        fetch('http://localhost:5000/manage/cleanrequest', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(jsonData)
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+            alert('Error');
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('Success:', data);
+          alert('Request added successfully');
+          // Handle success response here
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Error');
+          // Handle error here
+        });
+      });
+    </script>
+
   </div>
   <script src="assets/vendor/jquery/dist/jquery.min.js"></script>
   <script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
