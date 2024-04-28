@@ -204,13 +204,22 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label class="form-control-label" for="input-requestid">Request Id <span class="text-danger">*</span></label>
-                        <select name="feedReqid" class="form-control" id="input-requestid" required>
-                          <option selected="true" value="" disabled="disabled">Select Option</option>
-                          <!-- Sample options for feedback request IDs -->
-                          <option value="1">1 - John Doe</option>
-                          <option value="2">2 - Jane Doe</option>
-                        </select>
+                        <label class="form-control-label" for="input-requestid">Date <span class="text-danger">*</span></label>
+                        <div class="input-group input-group-alternative">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"
+                              ><i class="ni ni-calendar-grid-58"></i
+                            ></span>
+                          </div>
+                          <input
+                            name="reqDate"
+                            id="dateInput"
+                            class="form-control datepicker"
+                            placeholder="Select date"
+                            type="date"
+                            required
+                          />
+                        </div>
                       </div>
                     </div>
                     <div class="col-md-6">
