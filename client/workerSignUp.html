@@ -43,16 +43,16 @@
                     <h4>Sign Up</h4>
                     <p class="hide-on-large-only">Sit back &amp; relax! Get your room cleaned <br/> with just few clicks.</p>
                     <div class="row">
-                        <form action="http://localhost:5000/signup" method="POST" autocomplete="off" class="col s12">
+                        <form id="signupForm" autocomplete="off" class="col s12">
                             <div class="row flex-h-center mb-0">
                                 <div class="input-feild col s8">
-                                    <input name="studentRoll" type="text" id="rollnumber" class="validate" required/>
+                                    <input name="rollno" type="text" id="rollnumber" class="validate" required/>
                                     <label for="rollnumber">WorkerID</label>
                                 </div>
                             </div>
                             <div class="row flex-h-center mb-0">
                                 <div class="input-feild col s8">
-                                    <input name="studentPass" type="password" id="password" class="validate" required/>
+                                    <input name="password" type="password" id="password" class="validate" required/>
                                     <label for="password">Password</label>
                                 </div>
                             </div>
@@ -64,6 +64,45 @@
             </div>
         </div>
     </header>
+
+    <script>
+        document.getElementById("signupForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            const formData = new FormData(this);
+
+            // Convert form data to JSON object
+            const jsonObject = {};
+            formData.forEach((value, key) => {
+                jsonObject[key] = value;
+            });
+            const jsonData = JSON.stringify(jsonObject);
+
+            // Make fetch request
+            fetch("http://localhost:5000/auth/signup", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: jsonData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                    alert('Signup failed! Please try again.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("Signup successful:", data);
+                alert('Signup successful! Please login to continue.')
+            })
+            .catch(error => {
+                console.error("Error during signup:", error);
+                alert('Signup failed! Please try again.');
+            });
+        });
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <!-- Compiled and minified JavaScript -->
