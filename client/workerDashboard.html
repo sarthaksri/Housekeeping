@@ -29,7 +29,7 @@
       </button>
       <!-- Brand -->
       <a class="navbar-brand pt-4" href="#">
-        <h2>WORKER ID</h2> <!-- Replace 'WORKER ID' with actual WORKER ID-->
+        <h2 id="workerid">WORKER ID</h2> <!-- Replace 'WORKER ID' with actual WORKER ID-->
       </a>
       <!-- User -->
       <ul class="nav align-items-center d-md-none">
@@ -241,6 +241,18 @@
       </div>
     </div>
   </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Retrieve user data from local storage
+      const userData = JSON.parse(localStorage.getItem('userData'));
+  
+      // Update ADMIN ID with user's roll number
+      if (userData && userData.rollno) {
+        document.getElementById("workerid").textContent = userData.rollno;
+      }
+    });
+  </script>
 
   <script src="assets/vendor/jquery/dist/jquery.min.js"></script>
   <script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
