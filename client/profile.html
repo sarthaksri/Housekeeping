@@ -68,7 +68,7 @@
         </button>
         <!-- Brand -->
         <a class="navbar-brand pt-4" href="#">
-          <h2>ROLL NUMBER</h2>
+          <h2 id="studentroll">ROLL NUMBER</h2>
           <!-- Replace 'Roll Number' with actual roll number -->
         </a>
         <!-- User -->
@@ -310,6 +310,7 @@
         </div>
       </div>
     </div>
+
     <script>
       // Retrieve data from local storage
       const localStorageData = localStorage.getItem("userData");
@@ -335,6 +336,19 @@
       floorCell.textContent = parsedData.floor;
       roomCell.textContent = parsedData.roomno;
     </script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Retrieve user data from local storage
+    const userData = JSON.parse(localStorage.getItem('userData'));
+
+    // Update ADMIN ID with user's roll number
+    if (userData && userData.rollno) {
+      document.getElementById("studentroll").textContent = userData.rollno;
+    }
+  });
+</script>
+
     <script src="assets/vendor/jquery/dist/jquery.min.js"></script>
     <script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/argon.min.js"></script>
