@@ -17,6 +17,12 @@ const requestSchema = new Schema({
   },
   active:{
     type:String
+  },
+  floor:{
+    type:String
+  },
+  name:{
+    type:String
   }
 });
 

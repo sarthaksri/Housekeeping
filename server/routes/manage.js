@@ -10,4 +10,9 @@ router.post("/registerWorker", manage.registerWorker);
 router.post("/cleanRequest", manage.cleanRequest);
 // Feeback API : /manage/feedback
 router.post("/feedback", manage.feedback);
+// Allot Worker API : /manage/allotWorker
+router.post("/allotWorker", manage.allotWorker);
+// Get Requests API : /manage/getRequests
+router.post("/getRequests", manage.getRequests);
+
 module.exports = router; 

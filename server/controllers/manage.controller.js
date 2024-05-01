@@ -97,3 +97,41 @@ exports.feedback = asyncHandler(async(req,res) =>{
       return res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+exports.getRequests = asyncHandler(async (req,res) => {
+  try {
+      // Find all requests where active is "raised"
+      const requests = await Request.find({ active: "raised" });
+      //add roomno and floor to requests
+      for (let i = 0; i < requests.length; i++) {
+          const user = await User.findOne({ rollno: requests[i].rollno });
+          requests[i].roomno = user.roomno;
+          requests[i].floor = user.floor;
+      };
+      //convert requests to json and send it
+      return res.status(200).json(requests);
+  } catch (error) {
+      // Handle any errors
+      console.error("Error fetching requests:", error);
+      throw new Error("Error fetching requests");
+  }
+});
+
+exports.allotWorker = asyncHandler(async(req,res) =>{
+  try{
+     const {rollno, roomno, reqDate, floor, reqTime, name} = req.body;
+     const updatedRequest = await Request.findOneAndUpdate(
+      {date: reqDate},
+      { $set: { active: 'alloted', name: name } },
+      { new: true }
+    );
+    if(!updatedRequest) return res.status(404).json({ success: false, message: 'Request not found' });
+    return res.status(200).json({
+      success: true
+    });
+    }
+  catch(error){
+      console.log(error);
+      return res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
