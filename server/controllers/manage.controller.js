@@ -46,7 +46,7 @@ exports.cleanRequest = asyncHandler(async(req,res) =>{
 
 exports.feedback = asyncHandler(async(req,res) =>{
   try{
-     const {reqDate, reqTime, roomno, rollno, active} = req.body;
+     const {reqDate, rate, roomno, rollno, active} = req.body;
      const feed = await Feedback.create({
           
       });
