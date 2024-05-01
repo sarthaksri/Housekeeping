@@ -231,7 +231,7 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <label class="form-control-label" for="input-room">Floor <span class="text-danger">*</span></label>
-                        <input type="number" name="floor" id="input-room" class="form-control" required placeholder="Enter numeric value">
+                        <input type="number" name="floor" id="input-room" class="form-control" required placeholder="Enter Floor">
                       </div>
                     </div>
                   </div>
@@ -259,6 +259,8 @@
             jsonObject[key] = value;
         });
         const jsonData = JSON.stringify(jsonObject);
+
+        jsonData["type"] = "worker";
 
         // Make fetch request
         fetch("http://localhost:5000/manage/registerWorker", {

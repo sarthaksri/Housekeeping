@@ -5,10 +5,10 @@ const asyncHandler = require('express-async-handler');
 
 exports.registerStudent = asyncHandler(async(req,res) =>{
     try{
-        const {rollno, roomno, name, floor, hostel} = req.body;
+        const {rollno, roomno, name, floor, hostel, type} = req.body;
         const updatedStudent = await User.findOneAndUpdate(
             { rollno: rollno },
-            { $set: { roomno: roomno,name: name, floor: floor, hostel : hostel } },
+            { $set: { roomno: roomno,name: name, floor: floor, hostel : hostel, type: type } },
             { new: true }
           );
       
@@ -26,10 +26,10 @@ exports.registerStudent = asyncHandler(async(req,res) =>{
 
 exports.registerWorker = asyncHandler(async(req,res) =>{
   try{
-      const {rollno, name, floor} = req.body;
+      const {rollno, name, floor, type} = req.body;
       const updatedStudent = await User.findOneAndUpdate(
           { rollno: rollno },
-          { $set: {floor: floor, name : name } },
+          { $set: {floor: floor, name : name, type: type } },
           { new: true }
         );
     

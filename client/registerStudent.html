@@ -214,7 +214,7 @@
                     <div class="col-md-3">
                       <div class="form-group">
                         <label class="form-control-label" for="input-id">Roll Number <span class="text-danger">*</span></label>
-                        <input type="number" name="rollno" id="input-id" class="form-control" required placeholder="Enter numeric value">
+                        <input type="number" name="rollno" id="input-id" class="form-control" required placeholder="Enter Roll number">
                       </div>
                     </div>
                     <div class="col-md-3">
@@ -271,6 +271,8 @@
           jsonData[key] = value;
         });
   
+        jsonData["type"] = "student";
+
         // Send form data to the server
         fetch('http://localhost:5000/manage/registerStudent', {
           method: 'POST',
