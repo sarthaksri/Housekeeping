@@ -43,16 +43,16 @@
                     <h4>Sign In</h4>
                     <p class="hide-on-large-only">Sit back &amp; relax! Get your room cleaned <br/> with just few clicks.</p>
                     <div class="row">
-                        <form action="http://localhost:5000/signup" method="POST" autocomplete="off" class="col s12">
+                        <form id="loginForm" autocomplete="off" class="col s12">
                             <div class="row flex-h-center mb-0">
                                 <div class="input-feild col s8">
-                                    <input name="studentRoll" type="text" id="rollnumber" class="validate" required/>
+                                    <input name="adminid" type="text" id="rollnumber" class="validate" required/>
                                     <label for="rollnumber">WorkerID</label>
                                 </div>
                             </div>
                             <div class="row flex-h-center mb-0">
                                 <div class="input-feild col s8">
-                                    <input name="studentPass" type="password" id="password" class="validate" required/>
+                                    <input name="password" type="password" id="password" class="validate" required/>
                                     <label for="password">Password</label>
                                 </div>
                             </div>
@@ -64,6 +64,47 @@
             </div>
         </div>
     </header>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('loginForm').addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent form submission
+    
+                // Get form data
+                const adminId = document.getElementById('rollnumber').value;
+                const password = document.getElementById('password').value;
+    
+                // Make API call to login endpoint
+                fetch('http://localhost:5000/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ rollno: adminId, password: password })
+                })
+                .then(response => {
+                    console.log(response);
+                    if (!response.ok) {
+                        throw new Error('Login failed');
+                    }
+                    return response.json(); // Assuming the API returns JSON data
+                })
+                .then(data => {
+                    // Store user data in local storage
+                    localStorage.setItem('userData', JSON.stringify(data.user));
+                    // Redirect to studentDashboard.html
+                    window.location.href = 'workerDashboard.html';
+                })
+                .catch(error => {
+                    console.error('Login error:', error);
+                    // Log the response from the server
+                    response.text().then(text => {
+                    console.error('Server response:', text);
+                    });
+                });
+            });
+        });
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <!-- Compiled and minified JavaScript -->
