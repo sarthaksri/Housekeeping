@@ -1,5 +1,6 @@
 const User = require('../schema/user.js');
 const Request = require('../schema/request.js');
+const Feedback = require('../schema/feedback.js');
 const asyncHandler = require('express-async-handler');
 
 exports.registerStudent = asyncHandler(async(req,res) =>{
@@ -46,11 +47,26 @@ exports.cleanRequest = asyncHandler(async(req,res) =>{
 
 exports.feedback = asyncHandler(async(req,res) =>{
   try{
-     const {rollno, reqDate, rate, roomno, timein, timeout, suggestions, complaints} = req.body;
+     const {rollno, roomno, reqDate, rate, timein, timeout, suggestions, complaints} = req.body;
      const feed = await Feedback.create({
-          
+          rollno: rollno,
+          roomno: roomno,
+          date: reqDate,
+          rate: rate,
+          timein: timein,
+          timeout: timeout,
+          suggestions: suggestions,
+          complaints: complaints
       });
-
+      //update the status of the corresponding request to
+      //completed
+      const updatedRequest = await Request.findOneAndUpdate(
+                              {date: reqDate, rollno: rollno},
+                              { $set: { active: 'completed' } },
+                              { new: true }
+                            );
+      if(!updatedRequest) return res.status(404).json({ message: 'Request not found' });
+      
       return res.status(200).json({
         success: true
     });

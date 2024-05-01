@@ -276,6 +276,58 @@
     </div>
   </div>
 
+  <script>
+    document.getElementById("feedback").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent form submission
+
+        // Retrieve rollno and roomno from localStorage
+        const userData = JSON.parse(localStorage.getItem("userData"));
+        const rollno = userData ? userData.rollno : null;
+        const roomno = userData ? userData.roomno : null;
+
+        const formData = new FormData(this);
+
+        // Convert form data to JSON object
+        const jsonObject = {};
+        formData.forEach((value, key) => {
+            jsonObject[key] = value;
+        });
+        
+        // Add rollno and roomno to the JSON object
+        jsonObject["rollno"] = rollno;
+        jsonObject["roomno"] = roomno;
+
+        const jsonData = JSON.stringify(jsonObject);
+        
+        // Make fetch request
+        fetch("http://localhost:5000/manage/feedback", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: jsonData
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+                alert("Feedback not submitted. Please try again.")
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Feedback submitted successfully:", data);
+            alert("Feedback submitted successfully.");
+            document.getElementById("feedback").reset();
+            // Optionally, you can redirect or display a success message here
+        })
+        .catch(error => {
+            console.error("Error submitting feedback:", error);
+            alert("Feedback not submitted. Please try again.");
+            // Optionally, you can display an error message here
+        });
+    });
+</script>
+
   <script src="assets/vendor/jquery/dist/jquery.min.js"></script>
   <script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="assets/js/argon.min.js"></script>
