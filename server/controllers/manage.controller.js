@@ -5,10 +5,10 @@ const asyncHandler = require('express-async-handler');
 
 exports.registerStudent = asyncHandler(async(req,res) =>{
     try{
-        const {rollno, roomno, floor, hostel} = req.body;
+        const {rollno, roomno, name, floor, hostel} = req.body;
         const updatedStudent = await User.findOneAndUpdate(
             { rollno: rollno },
-            { $set: { roomno: roomno, floor: floor, hostel : hostel } },
+            { $set: { roomno: roomno,name: name, floor: floor, hostel : hostel } },
             { new: true }
           );
       
@@ -22,6 +22,27 @@ exports.registerStudent = asyncHandler(async(req,res) =>{
         console.log(error);
         return res.status(500).json({ error: 'Internal Server Error' });
     }
+});
+
+exports.registerWorker = asyncHandler(async(req,res) =>{
+  try{
+      const {rollno, name, floor} = req.body;
+      const updatedStudent = await User.findOneAndUpdate(
+          { rollno: rollno },
+          { $set: {floor: floor, name : name } },
+          { new: true }
+        );
+    
+        if (!updatedStudent) {
+          return res.status(404).json({ message: 'Student not found' });
+        }
+    
+        return res.status(200).json(updatedStudent);
+  }
+  catch(error){
+      console.log(error);
+      return res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 exports.cleanRequest = asyncHandler(async(req,res) =>{

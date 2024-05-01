@@ -18,6 +18,9 @@ const UserSchema = new Schema({
   },
   floor:{
     type:String
+  },
+  name:{
+    type:String
   }
 });
 

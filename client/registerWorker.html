@@ -213,19 +213,25 @@
               <h3 class="mb-0">Register New Housekeeper</h3>
             </div>
             <div class="card-body pb-5">
-              <form method="POST" autocomplete="off" action="allothandler.php" id="registerForm">
+              <form autocomplete="off" id="registerForm">
                 <div class="pl-lg-4">
                   <div class="row">
                     <div class="col-md-3">
                       <div class="form-group">
+                        <label class="form-control-label" for="input-id">Worker ID <span class="text-danger">*</span></label>
+                        <input type="text" name="rollno" id="worker-id" class="form-control" required placeholder="Worker ID">
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
                         <label class="form-control-label" for="input-id">Name <span class="text-danger">*</span></label>
-                        <input type="text" name="regName" id="input-id" class="form-control" required placeholder="Housekeeper Name">
+                        <input type="text" name="name" id="input-id" class="form-control" required placeholder="Housekeeper Name">
                       </div>
                     </div>
                     <div class="col-md-3">
                       <div class="form-group">
                         <label class="form-control-label" for="input-room">Floor <span class="text-danger">*</span></label>
-                        <input type="number" name="regFloor" id="input-room" class="form-control" required placeholder="Enter numeric value">
+                        <input type="number" name="floor" id="input-room" class="form-control" required placeholder="Enter numeric value">
                       </div>
                     </div>
                   </div>
@@ -242,14 +248,46 @@
   </div>
 
   <script>
-    // Script for handling form submission
     document.getElementById("registerForm").addEventListener("submit", function(event) {
-      event.preventDefault();
-      // Here you can add your AJAX code to handle form submission
-      // For example, display a success message after form submission
-      document.getElementById("successText").innerText = "Housekeeper registered successfully!";
-      document.getElementById("successMessage").style.display = "block";
+        event.preventDefault(); // Prevent form submission
+
+        const formData = new FormData(this);
+
+        // Convert form data to JSON object
+        const jsonObject = {};
+        formData.forEach((value, key) => {
+            jsonObject[key] = value;
+        });
+        const jsonData = JSON.stringify(jsonObject);
+
+        // Make fetch request
+        fetch("http://localhost:5000/manage/registerWorker", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: jsonData
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+                alert("Worker registration failed");
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Worker registered successfully:", data);
+            alert("Worker registered successfully");
+            // Reset the form after successful registration
+            document.getElementById("registerForm").reset();
+        })
+        .catch(error => {
+            console.error("Error registering worker:", error);
+            alert("Worker registration failed");
+            // Optionally, you can display an error message here
+        });
     });
-  </script>
+</script>
+
 </body>
 </html>
