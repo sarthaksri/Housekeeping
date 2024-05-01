@@ -43,3 +43,20 @@ exports.cleanRequest = asyncHandler(async(req,res) =>{
       return res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+exports.feedback = asyncHandler(async(req,res) =>{
+  try{
+     const {reqDate, reqTime, roomno, rollno, active} = req.body;
+     const feed = await Feedback.create({
+          
+      });
+
+      return res.status(200).json({
+        success: true
+    });
+    }
+  catch(error){
+      console.log(error);
+      return res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
