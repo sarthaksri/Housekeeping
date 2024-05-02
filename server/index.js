@@ -20,8 +20,11 @@ app.use((_req,res,next)=>{
   }))
 
   app.get("/",(req,res)=>{
-    res.send("Hell, World");
-  });
+    return res.json({
+        success:true,
+        message:"YOUR SERVER IS ACTIVATED"
+    })
+  })
 
 const auth = require('./routes/auth.js');
 app.use("/auth", auth);
