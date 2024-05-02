@@ -1,7 +1,7 @@
 const User = require('../schema/user.js');
 const Request = require('../schema/request.js');
 const Feedback = require('../schema/feedback.js');
-const asyncHandler = require('express-async-handler');
+const asyncHandler = require('express-async-handler')
 
 exports.registerStudent = asyncHandler(async(req,res) =>{
     try{
