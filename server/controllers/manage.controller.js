@@ -80,10 +80,10 @@ exports.feedback = asyncHandler(async(req,res) =>{
           complaints: complaints
       });
       //update the status of the corresponding request to
-      //completed
+      //Completed
       const updatedRequest = await Request.findOneAndUpdate(
                               {date: reqDate, rollno: rollno},
-                              { $set: { active: 'completed' } },
+                              { $set: { active: 'Completed' } },
                               { new: true }
                             );
       if(!updatedRequest) return res.status(404).json({ message: 'Request not found' });
@@ -117,12 +117,29 @@ exports.getRequests = asyncHandler(async (req,res) => {
   }
 });
 
+exports.dashboard = asyncHandler(async (req,res) => {
+  try {
+    const requests = await Request.find();
+  console.log(requests);
+  for (let i = 0; i < requests.length; i++) {
+    const user = await User.findOne({ rollno: requests[i].rollno });
+    requests[i].roomno = user.roomno;
+    requests[i].floor = user.floor;
+};
+    res.status(200).json(requests);
+} catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal server error' });
+}
+});
+  
+
 exports.allotWorker = asyncHandler(async(req,res) =>{
   try{
      const {rollno, roomno, reqDate, floor, reqTime, name} = req.body;
      const updatedRequest = await Request.findOneAndUpdate(
       {date: reqDate},
-      { $set: { active: 'alloted', name: name } },
+      { $set: { active: 'Alloted', name: name } },
       { new: true }
     );
     if(!updatedRequest) return res.status(404).json({ success: false, message: 'Request not found' });

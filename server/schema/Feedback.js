@@ -10,10 +10,12 @@ const feedbackSchema = new Schema({
     type : String,
   },
   timein:{
-    type:String
+    type:String,
+    default: "--:--"
   },
   timeout:{
-    type:String
+    type:String,
+    default: "--:--"
   },
   date:{
     type:String

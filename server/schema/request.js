@@ -23,6 +23,12 @@ const requestSchema = new Schema({
   },
   name:{
     type:String
+  },
+  timein:{
+    type:String
+  },
+  timeout:{
+    type:String
   }
 });
 
