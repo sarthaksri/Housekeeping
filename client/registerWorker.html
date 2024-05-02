@@ -34,7 +34,7 @@
       </button>
       <!-- Brand -->
       <a class="navbar-brand pt-4" href="#">
-        <h2>ADMIN ID</h2> <!-- Replace 'ADmin id' with actual admin id -->
+        <h2 id="adminId">ADMIN ID</h2> <!-- Replace 'ADmin id' with actual admin id -->
       </a>
       <!-- User -->
       <ul class="nav align-items-center d-md-none">
@@ -289,6 +289,18 @@
             // Optionally, you can display an error message here
         });
     });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Retrieve user data from local storage
+    const userData = JSON.parse(localStorage.getItem('userData'));
+
+    // Update ADMIN ID with user's roll number
+    if (userData && userData.rollno) {
+      document.getElementById("adminId").textContent = userData.rollno;
+    }
+  });
 </script>
 
 </body>

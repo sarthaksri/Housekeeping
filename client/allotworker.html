@@ -70,7 +70,7 @@
         </button>
         <!-- Brand -->
         <a class="navbar-brand pt-4" href="#">
-          <h2>ADMIN ID</h2>
+          <h2 id="adminId">ADMIN ID</h2>
         </a>
         <!-- User -->
         <ul class="nav align-items-center d-md-none">
@@ -394,6 +394,18 @@
           }
         });
     </script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Retrieve user data from local storage
+    const userData = JSON.parse(localStorage.getItem('userData'));
+
+    // Update ADMIN ID with user's roll number
+    if (userData && userData.rollno) {
+      document.getElementById("adminId").textContent = userData.rollno;
+    }
+  });
+</script>
 
     <!-- Scripts -->
     <script src="assets/vendor/jquery/dist/jquery.min.js"></script>
