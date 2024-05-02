@@ -19,6 +19,10 @@ app.use((_req,res,next)=>{
     credentials:true
   }))
 
+  app.get("/",(req,res)=>{
+    res.send("Hello World");
+  });
+
 const auth = require('./routes/auth.js');
 app.use("/auth", auth);
 const manage = require("./routes/manage.js");
