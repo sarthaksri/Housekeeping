@@ -279,7 +279,7 @@
 
     <script>
       // Fetch data from backend API
-      fetch("http://localhost:5000/manage/getRequests", {
+      fetch("https://housekeeping-backend.vercel.app/manage/getRequests", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -372,7 +372,7 @@
             });
             console.log(data);
             try {
-                const response = await fetch("http://localhost:5000/manage/allotWorker", {
+                const response = await fetch("https://housekeeping-backend.vercel.app/manage/allotWorker", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
