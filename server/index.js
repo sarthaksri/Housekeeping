@@ -20,7 +20,7 @@ app.use((_req,res,next)=>{
   }))
 
   app.get("/",(req,res)=>{
-    res.send("Hello World");
+    res.send("Hell, World");
   });
 
 const auth = require('./routes/auth.js');
