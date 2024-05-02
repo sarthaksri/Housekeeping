@@ -69,6 +69,13 @@ exports.cleanRequest = asyncHandler(async(req,res) =>{
 exports.feedback = asyncHandler(async(req,res) =>{
   try{
      const {rollno, roomno, reqDate, rate, timein, timeout, suggestions, complaints} = req.body;
+
+     const request = await Request.findOne({ rollno: rollno });
+        if (!request) {
+            return res.status(404).json({ message: 'Request not found' });
+        }
+        const name = request.name;
+
      const feed = await Feedback.create({
           rollno: rollno,
           roomno: roomno,
@@ -77,7 +84,8 @@ exports.feedback = asyncHandler(async(req,res) =>{
           timein: timein,
           timeout: timeout,
           suggestions: suggestions,
-          complaints: complaints
+          complaints: complaints,
+          name: name
       });
       //update the status of the corresponding request to
       //Completed
@@ -136,11 +144,6 @@ exports.getFeedback = asyncHandler(async (req,res) => {
   try {
       // Find all requests where active is "raised"
       const feedback = await Feedback.find();
-
-      for (let i = 0; i < feedback.length; i++) {
-        const user = await Request.findOne({ rollno: feedback[i].rollno, date: feedback[i].date});
-      feedback[i].name = user.name;
-    };
 
       console.log(feedback);
       //convert requests to json and send it

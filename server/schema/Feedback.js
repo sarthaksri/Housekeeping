@@ -30,7 +30,8 @@ const feedbackSchema = new Schema({
     type:String
   },
   name:{
-    type:String
+    type:String,
+    default:"Not Alloted yet"
   }
 });
 
