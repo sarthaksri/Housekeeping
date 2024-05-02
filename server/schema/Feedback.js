@@ -28,6 +28,9 @@ const feedbackSchema = new Schema({
   },
   complaints:{
     type:String
+  },
+  name:{
+    type:String
   }
 });
 

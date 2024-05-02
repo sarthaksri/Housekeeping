@@ -14,7 +14,9 @@ router.post("/feedback", manage.feedback);
 router.post("/allotWorker", manage.allotWorker);
 // Get Requests API : /manage/getRequests
 router.post("/getRequests", manage.getRequests);
-// Get Suggestions API : /manage/dashboard
+// Dashboard API : /manage/dashboard
 router.post("/dashboard", manage.dashboard);
+// Suggestions API : /manage/getFeedback
+router.post("/getFeedback", manage.getFeedback);
 
 module.exports = router; 

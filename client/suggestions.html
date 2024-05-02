@@ -205,31 +205,8 @@
                     <th colspan="3">Suggestions</th>
                   </tr>
                 </thead>
-                <tbody>
-                    <th scope="row">Jane Smith<br><i class='fas fa-star fa-xs' style='color:#f1c40f'></i><i class='ml-1 fas fa-star fa-xs' style='color:#f1c40f'></i></th>
-                    <td>102</td>
-                    <td>2024-04-24</td>
-                    <td style="height: 80px; overflow-y:auto">Replace towels</td>
-                    <td style="height: 80px; overflow-y:auto">Vacuum the room</td>
-                    <td style="height: 80px; overflow-y:auto">Check minibar supplies</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Emily Johnson<br><i class='fas fa-star fa-xs' style='color:#f1c40f'></i><i class='ml-1 fas fa-star fa-xs' style='color:#f1c40f'></i></th>
-                    <td>103</td>
-                    <td>2024-04-25</td>
-                    <td style="height: 80px; overflow-y:auto">Change bed linens</td>
-                    <td style="height: 80px; overflow-y:auto">Dust furniture</td>
-                    <td style="height: 80px; overflow-y:auto">Refill toiletries</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">David Brown<br><i class='fas fa-star fa-xs' style='color:#f1c40f'></i><i class='ml-1 fas fa-star fa-xs' style='color:#f1c40f'></i></th>
-                    <td>104</td>
-                    <td>2024-04-26</td>
-                    <td style="height: 80px; overflow-y:auto">Mop the floor</td>
-                    <td style="height: 80px; overflow-y:auto">Organize closet</td>
-                    <td style="height: 80px; overflow-y:auto">Clean bathroom fixtures</td>
-                  </tr>
-                  <!-- End of Dummy Data -->
+                <tbody id="t-body">
+                    
                 </tbody>
               </table>
             </div>
@@ -238,6 +215,45 @@
       </div>
     </div>
   </div>
+
+  <script>
+    // Fetch data from API using POST request
+    fetch("http://localhost:5000/manage/getFeedback", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        // If needed, include any data to send in the request body
+        body: JSON.stringify({
+            // Add any data you need to send here
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        const tbody = document.getElementById("t-body");
+
+        // Loop through each feedback item and create table rows
+        data.forEach(item => {
+            const row = document.createElement("tr");
+
+            // Construct row HTML
+            row.innerHTML = `
+                <th scope="row">${item.name}<br><i class='fas fa-star fa-xs' style='color:#f1c40f'></i><i class='ml-1 fas fa-star fa-xs' style='color:#f1c40f'></i></th>
+                <td>${item.roomno}</td>
+                <td>${item.date}</td>
+                <td style="height: 80px; overflow-y:auto">${item.suggestions}</td>
+            `;
+
+            // Append row to table body
+            tbody.appendChild(row);
+        });
+    })
+    .catch(error => {
+        console.error("Error fetching data:", error);
+    });
+</script>
+
+
   <script src="assets/vendor/jquery/dist/jquery.min.js"></script>
   <script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="assets/js/argon.min.js"></script>

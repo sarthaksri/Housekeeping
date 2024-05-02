@@ -25,10 +25,12 @@ const requestSchema = new Schema({
     type:String
   },
   timein:{
-    type:String
+    type:String,
+    default: "--:--"
   },
   timeout:{
-    type:String
+    type:String,
+    default: "--:--"
   }
 });
 

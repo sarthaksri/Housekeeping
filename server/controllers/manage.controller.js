@@ -83,7 +83,7 @@ exports.feedback = asyncHandler(async(req,res) =>{
       //Completed
       const updatedRequest = await Request.findOneAndUpdate(
                               {date: reqDate, rollno: rollno},
-                              { $set: { active: 'Completed' } },
+                              { $set: { active: 'Completed', timein : timein, timeout: timeout } },
                               { new: true }
                             );
       if(!updatedRequest) return res.status(404).json({ message: 'Request not found' });
@@ -120,12 +120,11 @@ exports.getRequests = asyncHandler(async (req,res) => {
 exports.dashboard = asyncHandler(async (req,res) => {
   try {
     const requests = await Request.find();
-  console.log(requests);
-  for (let i = 0; i < requests.length; i++) {
-    const user = await User.findOne({ rollno: requests[i].rollno });
-    requests[i].roomno = user.roomno;
-    requests[i].floor = user.floor;
-};
+    for (let i = 0; i < requests.length; i++) {
+      const user = await User.findOne({ rollno: requests[i].rollno });
+      requests[i].roomno = user.roomno;
+      requests[i].floor = user.floor;
+  };
     res.status(200).json(requests);
 } catch (err) {
     console.error(err);
@@ -133,6 +132,25 @@ exports.dashboard = asyncHandler(async (req,res) => {
 }
 });
   
+exports.getFeedback = asyncHandler(async (req,res) => {
+  try {
+      // Find all requests where active is "raised"
+      const feedback = await Feedback.find();
+
+      for (let i = 0; i < feedback.length; i++) {
+        const user = await Request.findOne({ rollno: feedback[i].rollno, date: feedback[i].date});
+      feedback[i].name = user.name;
+    };
+
+      console.log(feedback);
+      //convert requests to json and send it
+      return res.status(200).json(feedback);
+  } catch (error) {
+      // Handle any errors
+      console.error("Error fetching requests:", error);
+      throw new Error("Error fetching requests");
+  }
+});
 
 exports.allotWorker = asyncHandler(async(req,res) =>{
   try{
@@ -152,3 +170,4 @@ exports.allotWorker = asyncHandler(async(req,res) =>{
       return res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
