@@ -33,3 +33,4 @@ app.use("/manage", manage);
 app.listen(port, function() {
     console.log("Server is running on port " + port);
 });
+//mongoURI="mongodb+srv://sarthaksri017:finlearn@cluster0.ht9lhfk.mongodb.net/housekeeping?retryWrites=true&w=majority&appName=Cluster0"
